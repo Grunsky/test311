@@ -5,24 +5,30 @@ import java.util.*;
 
 public class Solution {
 
-       /* Каждый студент оценивается по шкале от 0 до 100 баллов. Оценка меньше
-	* 40 - не аттестован. 
-	* Итоговые результаты округляются до ближайщего числа, кратного 5,
-	* если разница между оценкой и этим числом меньше 3. Результаты меньше 
-	* 38 не округляются.
-	* Дано: n - количество студентов
-	* 	g[i] - оценка студента 
-	* 	1 <= n <= 60
-	* 	0 <= gr[i] <= 100
-	* Вычислить  итоговые результаты.
-	* 
-	*/
-    static int[] func(int[] gr) {
-        /*
-         * Write your code here.
-         */
-
+    static int modulo(int grad, int q) {
+        q = Math.abs(q);
+        int res = grad % q;
+        if(res < 0) res += q;
+        return res;
     }
+    static int closeq(int grad, int q) {
+        int down = modulo(grad, q);
+        int up = modulo(-grad, q);
+        int res = grad;
+        if(up > down) res -= down;
+        else res += up;
+        return res;
+    }
+
+    static int[] func(int[] grads) {
+        int q = 5;
+        for(int i = 0; i < grads.length; i++) {
+            if(grads[i] > 37) grads[i] = closeq(grads[i], q);
+        }
+        return grads;
+    }
+
+
 
     private static final Scanner scan = new Scanner(System.in);
 
